@@ -14,14 +14,9 @@ SetHardwareContext:
 
 	// 16 byte stack alignment
 	// don't ask me AMD64 ABI conventions, call stack must be 16 byte aligned
-	// last 4 bits to 0
-	// 4 bits max == 2^4 - 1 == 15
-	// 4 bits <= 15	
-	// => zeroing those bits allows us to get a number divisible by 16
-	// it means that rsp addr will be divisible by 16
-	// ensuring that stack is 16 byte aligned
 	// bitwise and between rsp and 0xFFFFFFF0
-	// 0xFFFFFFF0 == -16
+	// last 0 is max 15 * 16^0 == 15 then next max number is 16
+	// it might be equivalent to  rsp - rsp % 16
 	// example 4089 & -16 == 4080
 	andq $-16, %rsp 
 
